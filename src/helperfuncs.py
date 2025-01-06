@@ -18,3 +18,18 @@ def setRank(group: rbx.Group, userID: int, rank: int) -> tuple[bool, str]:
         return True, ""
     except rbx.exceptions.NotFound:
         return False, "User not found in group"
+    
+def getRank(group: rbx.Group, userID: int) -> int:
+    member = group.fetch_member(userID)
+    rank = group.fetch_role(member.role_id).rank
+    return rank
+
+def isinGroup(group: rbx.Group, userID: int) -> bool:
+    try:
+        member = group.fetch_member(userID)
+        if member:
+            return True
+        
+        return False
+    except rbx.exceptions.NotFound:
+        return False
